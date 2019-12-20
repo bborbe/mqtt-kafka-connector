@@ -8,7 +8,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"net/http"
 	"os"
 	"os/signal"
@@ -16,6 +15,8 @@ import (
 	"strings"
 	"syscall"
 	"time"
+
+	mqtt "github.com/eclipse/paho.mqtt.golang"
 
 	"github.com/Shopify/sarama"
 	"github.com/bborbe/argument"
@@ -50,6 +51,8 @@ func main() {
 type application struct {
 	InitialDelay time.Duration `required:"false" arg:"initial-delay" env:"INITIAL_DELAY" usage:"initial time before processing starts" default:"1m"`
 	MqttBroker   string        `required:"true" arg:"mqtt-broker" env:"MQTT_BROKER" usage:"broker address to connect"`
+	MqttUsername string        `required:"false" arg:"mqtt-user" env:"MQTT_USER" usage:"mqtt user"`
+	MqttPassword string        `required:"false" arg:"mqtt-password" env:"MQTT_PASSWORD" usage:"mqtt password" display:"length"`
 	MqttTopic    string        `required:"true" arg:"mqtt-topic" env:"MQTT_TOPIC" usage:"topic name dummy data are written to"`
 	KafkaBrokers string        `required:"true" arg:"kafka-brokers" env:"KAFKA_BROKERS" usage:"kafka brokers"`
 	KafkaTopic   string        `required:"true" arg:"kafka-topic" env:"KAFKA_TOPIC" usage:"kafka topic"`
@@ -103,9 +106,12 @@ func (a *application) createFetcherCron() func(ctx context.Context) error {
 		}
 		defer producer.Close()
 
-		opts := mqtt.NewClientOptions().AddBroker(a.MqttBroker)
-
-		mqttClient := mqtt.NewClient(opts)
+		mqttClient := mqtt.NewClient(
+			mqtt.NewClientOptions().
+				AddBroker(a.MqttBroker).
+				SetUsername(a.MqttUsername).
+				SetPassword(a.MqttPassword),
+		)
 		if token := mqttClient.Connect(); token.Wait() && token.Error() != nil {
 			return errors.Wrap(token.Error(), "connect failed")
 		}

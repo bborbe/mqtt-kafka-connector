@@ -6,7 +6,7 @@ Insert data into a topic.
 
 ```bash
 go run main.go \
--mqtt-broker=tcp://mqtt:1883 \
+-mqtt-broker=tcp://localhost:1883 \
 -mqtt-topic=mytopic/test \
 -mqtt-payload=banana \
 -v=2

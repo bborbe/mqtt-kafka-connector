@@ -40,9 +40,11 @@ func main() {
 }
 
 type application struct {
-	MqttBroker  string `required:"true" arg:"mqtt-broker" env:"MQTT_BROKER" usage:"broker address to connect"`
-	MqttTopic   string `required:"true" arg:"mqtt-topic" env:"MQTT_TOPIC" usage:"topic name dummy data are written to"`
-	MqttPayload string `required:"true" arg:"mqtt-payload" env:"MQTT_PAYLOAD" usage:"content written to topic"`
+	MqttBroker   string `required:"true" arg:"mqtt-broker" env:"MQTT_BROKER" usage:"broker address to connect"`
+	MqttUsername string `required:"false" arg:"mqtt-user" env:"MQTT_USER" usage:"mqtt user"`
+	MqttPassword string `required:"false" arg:"mqtt-password" env:"MQTT_PASSWORD" usage:"mqtt password" display:"length"`
+	MqttTopic    string `required:"true" arg:"mqtt-topic" env:"MQTT_TOPIC" usage:"topic name dummy data are written to"`
+	MqttPayload  string `required:"true" arg:"mqtt-payload" env:"MQTT_PAYLOAD" usage:"content written to topic"`
 }
 
 func contextWithSig(ctx context.Context) context.Context {
@@ -63,13 +65,16 @@ func contextWithSig(ctx context.Context) context.Context {
 }
 
 func (a *application) run(ctx context.Context) error {
-	client := mqtt.NewClient(
-		mqtt.NewClientOptions().AddBroker(a.MqttBroker),
+	mqttClient := mqtt.NewClient(
+		mqtt.NewClientOptions().
+			AddBroker(a.MqttBroker).
+			SetUsername(a.MqttUsername).
+			SetPassword(a.MqttPassword),
 	)
-	if token := client.Connect(); token.Wait() && token.Error() != nil {
+	if token := mqttClient.Connect(); token.Wait() && token.Error() != nil {
 		return errors.Wrap(token.Error(), "connect failed")
 	}
-	if token := client.Publish(
+	if token := mqttClient.Publish(
 		a.MqttTopic,
 		0,
 		false,
