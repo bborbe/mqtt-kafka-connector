@@ -10,7 +10,7 @@ import "bytes"
 type ErrorList []error
 
 // NewErrorList create a ErrorList with the given errors.
-func NewErrorList(errors ...error) ErrorList {
+func NewErrorList(errors ...error) error {
 	if len(errors) == 0 {
 		return nil
 	}
@@ -18,7 +18,7 @@ func NewErrorList(errors ...error) ErrorList {
 }
 
 // NewErrorListByChan create a ErrorList with the given error channel.
-func NewErrorListByChan(errors <-chan error) ErrorList {
+func NewErrorListByChan(errors <-chan error) error {
 	var list []error
 	for err := range errors {
 		list = append(list, err)

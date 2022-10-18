@@ -12,6 +12,7 @@ import (
 
 // NewMetrics create prometheus metrics for the given Func.
 func NewMetrics(
+	registerer prometheus.Registerer,
 	namespace string,
 	subsystem string,
 	fn Func,
@@ -34,7 +35,18 @@ func NewMetrics(
 		Name:      "failed",
 		Help:      "failed",
 	})
-	prometheus.MustRegister(started, completed, failed)
+	lastSuccess := prometheus.NewGauge(prometheus.GaugeOpts{
+		Namespace: namespace,
+		Subsystem: subsystem,
+		Name:      "last_success",
+		Help:      "Timestamp of last successful run",
+	})
+	registerer.MustRegister(
+		started,
+		completed,
+		failed,
+		lastSuccess,
+	)
 	return func(ctx context.Context) error {
 		started.Inc()
 		if err := fn(ctx); err != nil {
@@ -42,6 +54,7 @@ func NewMetrics(
 			return err
 		}
 		completed.Inc()
+		lastSuccess.SetToCurrentTime()
 		return nil
 	}
 }

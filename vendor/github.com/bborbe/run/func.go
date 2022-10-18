@@ -8,3 +8,15 @@ import "context"
 
 // Func interface for all run utils.
 type Func func(context.Context) error
+
+// Run the func
+func (r Func) Run(ctx context.Context) error {
+	return r(ctx)
+}
+
+//go:generate counterfeiter -o mocks/runnable.go --fake-name Runnable . Runnable
+
+// Runnable interface
+type Runnable interface {
+	Run(ctx context.Context) error
+}

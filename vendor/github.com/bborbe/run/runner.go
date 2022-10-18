@@ -1,13 +1,13 @@
 // Copyright (c) 2019 Benjamin Borbe All rights reserved.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
+
 package run
 
 import (
 	"context"
 	"runtime"
 	"sync"
-	"time"
 )
 
 // CancelOnFirstFinish executes all given functions. After the first function finishes, any remaining functions will be canceled.
@@ -53,7 +53,7 @@ func Sequential(ctx context.Context, funcs ...Func) (err error) {
 	for _, fn := range funcs {
 		select {
 		case <-ctx.Done():
-			return nil
+			return ctx.Err()
 		default:
 			if err = fn(ctx); err != nil {
 				return
@@ -95,16 +95,4 @@ func onlyNotNil(ch <-chan error) <-chan error {
 		}
 	}()
 	return errors
-}
-
-// Delayed wraps the given function that delays the execution.
-func Delayed(fn Func, duration time.Duration) Func {
-	return func(ctx context.Context) error {
-		select {
-		case <-ctx.Done():
-			return nil
-		case <-time.NewTimer(duration).C:
-			return fn(ctx)
-		}
-	}
 }

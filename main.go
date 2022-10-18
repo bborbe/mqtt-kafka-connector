@@ -16,11 +16,10 @@ import (
 	"syscall"
 	"time"
 
-	mqtt "github.com/eclipse/paho.mqtt.golang"
-
 	"github.com/Shopify/sarama"
 	"github.com/bborbe/argument"
 	"github.com/bborbe/run"
+	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"
