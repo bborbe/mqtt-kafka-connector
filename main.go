@@ -16,7 +16,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/Shopify/sarama"
+	"github.com/IBM/sarama"
 	"github.com/bborbe/argument"
 	"github.com/bborbe/run"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
