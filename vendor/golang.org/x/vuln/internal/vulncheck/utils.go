@@ -9,6 +9,7 @@ import (
 	"context"
 	"go/token"
 	"go/types"
+	"sort"
 	"strings"
 
 	"golang.org/x/tools/go/callgraph"
@@ -18,6 +19,7 @@ import (
 	"golang.org/x/tools/go/ssa/ssautil"
 	"golang.org/x/tools/go/types/typeutil"
 	"golang.org/x/vuln/internal/osv"
+	"golang.org/x/vuln/internal/semver"
 
 	"golang.org/x/tools/go/ssa"
 )
@@ -26,7 +28,6 @@ import (
 // the ssa program encapsulating the packages and top level
 // ssa packages corresponding to pkgs.
 func buildSSA(pkgs []*packages.Package, fset *token.FileSet) (*ssa.Program, []*ssa.Package) {
-	// TODO(https://go.dev/issue/57221): what about entry functions that are generics?
 	prog := ssa.NewProgram(fset, ssa.InstantiateGenerics)
 
 	imports := make(map[*packages.Package]*ssa.Package)
@@ -110,15 +111,17 @@ func dbTypeFormat(t types.Type) string {
 
 // dbFuncName computes a function name consistent with the namings used in vulnerability
 // databases. Effectively, a qualified name of a function local to its enclosing package.
-// If a receiver is a pointer, this information is not encoded in the resulting name. The
-// name of anonymous functions is simply "". The function names are unique subject to the
-// enclosing package, but not globally.
+// If a receiver is a pointer, this information is not encoded in the resulting name. If
+// a function has type argument/parameter, this information is omitted. The name of
+// anonymous functions is simply "". The function names are unique subject to the enclosing
+// package, but not globally.
 //
 // Examples:
 //
 //	func (a A) foo (...) {...}  -> A.foo
 //	func foo(...) {...}         -> foo
 //	func (b *B) bar (...) {...} -> B.bar
+//	func (c C[T]) do(...) {...} -> C.do
 func dbFuncName(f *ssa.Function) string {
 	selectBound := func(f *ssa.Function) types.Type {
 		// If f is a "bound" function introduced by ssa for a given type, return the type.
@@ -151,18 +154,17 @@ func dbFuncName(f *ssa.Function) string {
 	}
 
 	if qprefix == "" {
-		return f.Name()
+		return funcName(f)
 	}
-	return qprefix + "." + f.Name()
+	return qprefix + "." + funcName(f)
 }
 
-// dbTypesFuncName is dbFuncName defined over *types.Func.
-func dbTypesFuncName(f *types.Func) string {
-	sig := f.Type().(*types.Signature)
-	if sig.Recv() == nil {
-		return f.Name()
-	}
-	return dbTypeFormat(sig.Recv().Type()) + "." + f.Name()
+// funcName returns the name of the ssa function f.
+// It is f.Name() without additional type argument
+// information in case of generics.
+func funcName(f *ssa.Function) string {
+	n, _, _ := strings.Cut(f.Name(), "[")
+	return n
 }
 
 // memberFuncs returns functions associated with the `member`:
@@ -227,35 +229,89 @@ func funcRecvType(f *ssa.Function) string {
 	return buf.String()
 }
 
-// allSymbols returns all top-level functions and methods defined in pkg.
-func allSymbols(pkg *types.Package) []string {
-	var names []string
-	scope := pkg.Scope()
-	for _, name := range scope.Names() {
-		o := scope.Lookup(name)
-		switch o := o.(type) {
-		case *types.Func:
-			names = append(names, dbTypesFuncName(o))
-		case *types.TypeName:
-			ms := types.NewMethodSet(types.NewPointer(o.Type()))
-			for i := 0; i < ms.Len(); i++ {
-				if f, ok := ms.At(i).Obj().(*types.Func); ok {
-					names = append(names, dbTypesFuncName(f))
+func FixedVersion(modulePath, version string, affected []osv.Affected) string {
+	fixed := earliestValidFix(modulePath, version, affected)
+	// Add "v" prefix if one does not exist. moduleVersionString
+	// will later on replace it with "go" if needed.
+	if fixed != "" && !strings.HasPrefix(fixed, "v") {
+		fixed = "v" + fixed
+	}
+	return fixed
+}
+
+// earliestValidFix returns the earliest fix for version of modulePath that
+// itself is not vulnerable in affected.
+//
+// Suppose we have a version "v1.0.0" and we use {...} to denote different
+// affected regions. Assume for simplicity that all affected apply to the
+// same input modulePath.
+//
+//	{[v0.1.0, v0.1.9), [v1.0.0, v2.0.0)} -> v2.0.0
+//	{[v1.0.0, v1.5.0), [v2.0.0, v2.1.0}, {[v1.4.0, v1.6.0)} -> v2.1.0
+func earliestValidFix(modulePath, version string, affected []osv.Affected) string {
+	var moduleAffected []osv.Affected
+	for _, a := range affected {
+		if a.Module.Path == modulePath {
+			moduleAffected = append(moduleAffected, a)
+		}
+	}
+
+	vFixes := validFixes(version, moduleAffected)
+	for _, fix := range vFixes {
+		if !fixNegated(fix, moduleAffected) {
+			return fix
+		}
+	}
+	return ""
+
+}
+
+// validFixes computes all fixes for version in affected and
+// returns them sorted increasingly. Assumes that all affected
+// apply to the same module.
+func validFixes(version string, affected []osv.Affected) []string {
+	var fixes []string
+	for _, a := range affected {
+		for _, r := range a.Ranges {
+			if r.Type != osv.RangeTypeSemver {
+				continue
+			}
+			for _, e := range r.Events {
+				fix := e.Fixed
+				if fix != "" && semver.Less(version, fix) {
+					fixes = append(fixes, fix)
 				}
 			}
 		}
 	}
-	return names
+	sort.SliceStable(fixes, func(i, j int) bool { return semver.Less(fixes[i], fixes[j]) })
+	return fixes
 }
 
-// vulnMatchesPackage reports whether an entry applies to pkg (an import path).
-func vulnMatchesPackage(v *osv.Entry, pkg string) bool {
-	for _, a := range v.Affected {
-		for _, p := range a.EcosystemSpecific.Packages {
-			if p.Path == pkg {
+// fixNegated checks if fix is negated to by a re-introduction
+// of a vulnerability in affected. Assumes that all affected apply
+// to the same module.
+func fixNegated(fix string, affected []osv.Affected) bool {
+	for _, a := range affected {
+		for _, r := range a.Ranges {
+			if semver.ContainsSemver(r, fix) {
 				return true
 			}
 		}
 	}
 	return false
+}
+
+func modPath(mod *packages.Module) string {
+	if mod.Replace != nil {
+		return mod.Replace.Path
+	}
+	return mod.Path
+}
+
+func modVersion(mod *packages.Module) string {
+	if mod.Replace != nil {
+		return mod.Replace.Version
+	}
+	return mod.Version
 }

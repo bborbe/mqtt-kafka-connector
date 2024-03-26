@@ -5,6 +5,7 @@ precommit: ensure format generate test check addlicense
 	@echo "ready to commit"
 
 ensure:
+	go mod tidy
 	go mod verify
 	go mod vendor
 
@@ -17,9 +18,9 @@ generate:
 	go generate -mod=vendor ./...
 
 test:
-	go test -mod=vendor -p=1 -cover -race $(shell go list -mod=vendor ./... | grep -v /vendor/)
+	go test -mod=vendor -p=$${GO_TEST_PARALLEL:-1} -cover -race $(shell go list -mod=vendor ./... | grep -v /vendor/)
 
-check: lint vet errcheck
+check: lint vet errcheck vulncheck
 
 lint:
 	go run -mod=vendor golang.org/x/lint/golint -min_confidence 1 $(shell go list -mod=vendor ./... | grep -v /vendor/)
@@ -31,4 +32,7 @@ errcheck:
 	go run -mod=vendor github.com/kisielk/errcheck -ignore '(Close|Write|Fprint)' $(shell go list -mod=vendor ./... | grep -v /vendor/)
 
 addlicense:
-	go run -mod=vendor github.com/google/addlicense -c "Benjamin Borbe" -y 2021 -l bsd ./*.go
+	go run -mod=vendor github.com/google/addlicense -c "Benjamin Borbe" -y $$(date +'%Y') -l bsd $$(find . -name "*.go" -not -path './vendor/*')
+
+vulncheck:
+	go run -mod=vendor golang.org/x/vuln/cmd/govulncheck $(shell go list -mod=vendor ./... | grep -v /vendor/)

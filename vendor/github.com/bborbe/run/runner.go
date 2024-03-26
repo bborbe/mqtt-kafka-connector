@@ -20,6 +20,24 @@ func CancelOnFirstFinish(ctx context.Context, funcs ...Func) error {
 	return <-Run(ctx, funcs...)
 }
 
+// CancelOnFirstFinishWait executes all given functions. After the first function finishes, any remaining functions will be canceled.
+func CancelOnFirstFinishWait(ctx context.Context, funcs ...Func) error {
+	if len(funcs) == 0 {
+		return nil
+	}
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	var errs []error
+	for err := range Run(ctx, funcs...) {
+		cancel()
+		if err != nil {
+			errs = append(errs, err)
+		}
+	}
+	return NewErrorList(errs...)
+}
+
 // CancelOnFirstError executes all given functions. When a function encounters an error all remaining functions will be canceled.
 func CancelOnFirstError(ctx context.Context, funcs ...Func) error {
 	if len(funcs) == 0 {
@@ -27,12 +45,31 @@ func CancelOnFirstError(ctx context.Context, funcs ...Func) error {
 	}
 	ctx, cancel := context.WithCancel(ctx)
 	defer cancel()
+
 	for err := range Run(ctx, funcs...) {
 		if err != nil {
 			return err
 		}
 	}
 	return nil
+}
+
+// CancelOnFirstErrorWait executes all given functions. When a function encounters an error all remaining functions will be canceled.
+func CancelOnFirstErrorWait(ctx context.Context, funcs ...Func) error {
+	if len(funcs) == 0 {
+		return nil
+	}
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	var errs []error
+	for err := range Run(ctx, funcs...) {
+		if err != nil {
+			cancel()
+			errs = append(errs, err)
+		}
+	}
+	return NewErrorList(errs...)
 }
 
 // All executes all given functions. Errors are wrapped into one aggregate error.

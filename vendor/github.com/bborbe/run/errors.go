@@ -4,39 +4,20 @@
 
 package run
 
-import "bytes"
-
-// ErrorList contains a list of errors.
-type ErrorList []error
+import (
+	"github.com/bborbe/errors"
+)
 
 // NewErrorList create a ErrorList with the given errors.
-func NewErrorList(errors ...error) error {
-	if len(errors) == 0 {
-		return nil
-	}
-	return ErrorList(errors)
+func NewErrorList(errs ...error) error {
+	return errors.Join(errs...)
 }
 
 // NewErrorListByChan create a ErrorList with the given error channel.
-func NewErrorListByChan(errors <-chan error) error {
-	var list []error
-	for err := range errors {
-		list = append(list, err)
+func NewErrorListByChan(ch <-chan error) error {
+	var errs []error
+	for err := range ch {
+		errs = append(errs, err)
 	}
-	return NewErrorList(list...)
-}
-
-// Error combines all error messages into one.
-func (e ErrorList) Error() string {
-	buf := bytes.NewBufferString("errors: ")
-	first := true
-	for _, err := range e {
-		if first {
-			first = false
-		} else {
-			buf.WriteString(", ")
-		}
-		buf.WriteString(err.Error())
-	}
-	return buf.String()
+	return errors.Join(errs...)
 }
