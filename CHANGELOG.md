@@ -8,43 +8,43 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
-## 1.1.8
+## v1.1.8
 
 - go mod update
 
-## 1.1.7
+## v1.1.7
 
 - go mod update
 
-## 1.1.6
+## v1.1.6
 
 - go mod update
 
-## 1.1.5
+## v1.1.5
 
 - go mod update
 
-## 1.1.4
+## v1.1.4
 
 - go mod update
 
-## 1.1.3
+## v1.1.3
 
 - go mod update
 
-## 1.1.2
+## v1.1.2
 
 - go mod update
 
-## 1.1.1
+## v1.1.1
 
 - add vulncheck
 - go mod update
 
-## 1.1.0
+## v1.1.0
 
 - go mod update
 
-## 1.0.0
+## v1.0.0
 
 - Initial version
