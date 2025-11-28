@@ -8,7 +8,6 @@ import (
 	"context"
 	"flag"
 	"fmt"
-	"net/http"
 	"os"
 	"os/signal"
 	"runtime"
@@ -17,12 +16,13 @@ import (
 	"time"
 
 	"github.com/IBM/sarama"
-	"github.com/bborbe/argument"
+	"github.com/bborbe/argument/v2"
+	"github.com/bborbe/errors"
+	libhttp "github.com/bborbe/http"
 	"github.com/bborbe/run"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/golang/glog"
 	"github.com/gorilla/mux"
-	"github.com/pkg/errors"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
@@ -32,14 +32,15 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	_ = flag.Set("logtostderr", "true")
 
+	ctx := context.Background()
 	app := &application{}
-	if err := argument.Parse(app); err != nil {
+	if err := argument.Parse(ctx, app); err != nil {
 		glog.Exitf("parse app failed: %v", err)
 	}
 
 	glog.V(0).Infof("application started")
 	if err := app.run(
-		contextWithSig(context.Background()),
+		contextWithSig(ctx),
 	); err != nil {
 		glog.Exitf("application failed: %+v", err)
 	}
@@ -49,13 +50,13 @@ func main() {
 
 type application struct {
 	InitialDelay time.Duration `required:"false" arg:"initial-delay" env:"INITIAL_DELAY" usage:"initial time before processing starts" default:"1m"`
-	MqttBroker   string        `required:"true" arg:"mqtt-broker" env:"MQTT_BROKER" usage:"broker address to connect"`
-	MqttUsername string        `required:"false" arg:"mqtt-user" env:"MQTT_USER" usage:"mqtt user"`
-	MqttPassword string        `required:"false" arg:"mqtt-password" env:"MQTT_PASSWORD" usage:"mqtt password" display:"length"`
-	MqttTopic    string        `required:"true" arg:"mqtt-topic" env:"MQTT_TOPIC" usage:"topic name dummy data are written to"`
-	KafkaBrokers string        `required:"true" arg:"kafka-brokers" env:"KAFKA_BROKERS" usage:"kafka brokers"`
-	KafkaTopic   string        `required:"true" arg:"kafka-topic" env:"KAFKA_TOPIC" usage:"kafka topic"`
-	Port         int           `required:"false" arg:"port" env:"PORT" usage:"port to listen" default:"9022"`
+	MqttBroker   string        `required:"true"  arg:"mqtt-broker"   env:"MQTT_BROKER"   usage:"broker address to connect"`
+	MqttUsername string        `required:"false" arg:"mqtt-user"     env:"MQTT_USER"     usage:"mqtt user"`
+	MqttPassword string        `required:"false" arg:"mqtt-password" env:"MQTT_PASSWORD" usage:"mqtt password"                                        display:"length"`
+	MqttTopic    string        `required:"true"  arg:"mqtt-topic"    env:"MQTT_TOPIC"    usage:"topic name dummy data are written to"`
+	KafkaBrokers string        `required:"true"  arg:"kafka-brokers" env:"KAFKA_BROKERS" usage:"kafka brokers"`
+	KafkaTopic   string        `required:"true"  arg:"kafka-topic"   env:"KAFKA_TOPIC"   usage:"kafka topic"`
+	Port         int           `required:"false" arg:"port"          env:"PORT"          usage:"port to listen"                        default:"9022"`
 }
 
 func contextWithSig(ctx context.Context) context.Context {
@@ -81,7 +82,7 @@ func (a *application) run(
 	return run.CancelOnFirstFinish(
 		ctx,
 		run.Delayed(a.createFetcherCron(), a.InitialDelay),
-		a.runHttpServer,
+		a.runHTTPServer,
 	)
 }
 
@@ -95,13 +96,13 @@ func (a *application) createFetcherCron() func(ctx context.Context) error {
 
 		client, err := sarama.NewClient(strings.Split(a.KafkaBrokers, ","), config)
 		if err != nil {
-			return errors.Wrap(err, "create client failed")
+			return errors.Wrap(ctx, err, "create client failed")
 		}
 		defer client.Close()
 
 		producer, err := sarama.NewSyncProducerFromClient(client)
 		if err != nil {
-			return errors.Wrap(err, "create sync producer failed")
+			return errors.Wrap(ctx, err, "create sync producer failed")
 		}
 		defer producer.Close()
 
@@ -112,7 +113,7 @@ func (a *application) createFetcherCron() func(ctx context.Context) error {
 				SetPassword(a.MqttPassword),
 		)
 		if token := mqttClient.Connect(); token.Wait() && token.Error() != nil {
-			return errors.Wrap(token.Error(), "connect failed")
+			return errors.Wrap(ctx, token.Error(), "connect failed")
 		}
 
 		errs := make(chan error, runtime.NumCPU())
@@ -132,40 +133,23 @@ func (a *application) createFetcherCron() func(ctx context.Context) error {
 				}
 			}
 			glog.V(2).Infof("send message successful to %s with partition %d offset %d", a.KafkaTopic, partition, offset)
-		}); token.Wait() && token.Error() != nil {
-			return errors.Wrap(token.Error(), "subscribe failed")
+		}); token.Wait() &&
+			token.Error() != nil {
+			return errors.Wrap(ctx, token.Error(), "subscribe failed")
 		}
 		return <-errs
 	}
 }
 
-func (a *application) runHttpServer(ctx context.Context) error {
+func (a *application) runHTTPServer(ctx context.Context) error {
 	router := mux.NewRouter()
-	router.HandleFunc("/healthz", a.check)
-	router.HandleFunc("/readiness", a.check)
-	router.Handle("/metrics", promhttp.Handler())
+	router.Path("/healthz").Handler(libhttp.NewPrintHandler("OK"))
+	router.Path("/readiness").Handler(libhttp.NewPrintHandler("OK"))
+	router.Path("/metrics").Handler(promhttp.Handler())
 
-	server := &http.Server{
-		Addr:    fmt.Sprintf(":%d", a.Port),
-		Handler: router,
-	}
-
-	go func() {
-		select {
-		case <-ctx.Done():
-			if err := server.Shutdown(ctx); err != nil {
-				glog.Warningf("shutdown failed: %v", err)
-			}
-		}
-	}()
-	err := server.ListenAndServe()
-	if err == http.ErrServerClosed {
-		glog.V(0).Info(err)
-		return nil
-	}
-	return errors.Wrap(err, "httpServer failed")
-}
-
-func (a *application) check(resp http.ResponseWriter, req *http.Request) {
-	fmt.Fprint(resp, "OK")
+	glog.V(2).Infof("starting http server listen on :%d", a.Port)
+	return libhttp.NewServer(
+		fmt.Sprintf(":%d", a.Port),
+		router,
+	).Run(ctx)
 }

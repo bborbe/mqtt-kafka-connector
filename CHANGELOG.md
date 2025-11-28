@@ -8,6 +8,18 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.0
+- Modernize build tooling and linting infrastructure
+- Replace deprecated golint with golangci-lint
+- Add comprehensive security scanning (gosec, osv-scanner, trivy)
+- Add code formatting tools (golines, go-modtool)
+- Migrate to github.com/bborbe/http for server with secure defaults
+- Update to github.com/bborbe/argument/v2 with context support
+- Update to github.com/bborbe/errors with context support
+- Remove vendor directory from git tracking
+- Add .gitignore for vendor directory
+- Update Makefile to use -mod=mod instead of -mod=vendor
+
 ## v1.1.9
 - Update dependencies to latest versions
 - Update bborbe/run and bborbe/errors libraries

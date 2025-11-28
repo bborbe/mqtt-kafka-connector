@@ -12,10 +12,10 @@ import (
 	"runtime"
 	"syscall"
 
-	"github.com/bborbe/argument"
+	"github.com/bborbe/argument/v2"
+	"github.com/bborbe/errors"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/golang/glog"
-	"github.com/pkg/errors"
 )
 
 func main() {
@@ -24,14 +24,15 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	_ = flag.Set("logtostderr", "true")
 
+	ctx := context.Background()
 	app := &application{}
-	if err := argument.Parse(app); err != nil {
+	if err := argument.Parse(ctx, app); err != nil {
 		glog.Exitf("parse app failed: %v", err)
 	}
 
 	glog.V(0).Infof("application started")
 	if err := app.run(
-		contextWithSig(context.Background()),
+		contextWithSig(ctx),
 	); err != nil {
 		glog.Exitf("application failed: %+v", err)
 	}
@@ -40,11 +41,11 @@ func main() {
 }
 
 type application struct {
-	MqttBroker   string `required:"true" arg:"mqtt-broker" env:"MQTT_BROKER" usage:"broker address to connect"`
-	MqttUsername string `required:"false" arg:"mqtt-user" env:"MQTT_USER" usage:"mqtt user"`
-	MqttPassword string `required:"false" arg:"mqtt-password" env:"MQTT_PASSWORD" usage:"mqtt password" display:"length"`
-	MqttTopic    string `required:"true" arg:"mqtt-topic" env:"MQTT_TOPIC" usage:"topic name dummy data are written to"`
-	MqttPayload  string `required:"true" arg:"mqtt-payload" env:"MQTT_PAYLOAD" usage:"content written to topic"`
+	MqttBroker   string `required:"true"  arg:"mqtt-broker"   env:"MQTT_BROKER"   usage:"broker address to connect"`
+	MqttUsername string `required:"false" arg:"mqtt-user"     env:"MQTT_USER"     usage:"mqtt user"`
+	MqttPassword string `required:"false" arg:"mqtt-password" env:"MQTT_PASSWORD" usage:"mqtt password"                        display:"length"`
+	MqttTopic    string `required:"true"  arg:"mqtt-topic"    env:"MQTT_TOPIC"    usage:"topic name dummy data are written to"`
+	MqttPayload  string `required:"true"  arg:"mqtt-payload"  env:"MQTT_PAYLOAD"  usage:"content written to topic"`
 }
 
 func contextWithSig(ctx context.Context) context.Context {
@@ -72,7 +73,7 @@ func (a *application) run(ctx context.Context) error {
 			SetPassword(a.MqttPassword),
 	)
 	if token := mqttClient.Connect(); token.Wait() && token.Error() != nil {
-		return errors.Wrap(token.Error(), "connect failed")
+		return errors.Wrap(ctx, token.Error(), "connect failed")
 	}
 	if token := mqttClient.Publish(
 		a.MqttTopic,
@@ -80,7 +81,7 @@ func (a *application) run(ctx context.Context) error {
 		false,
 		a.MqttPayload,
 	); token.Wait() && token.Error() != nil {
-		return errors.Wrap(token.Error(), "publish failed")
+		return errors.Wrap(ctx, token.Error(), "publish failed")
 	}
 	glog.V(2).Infof("message published successful")
 	return nil
