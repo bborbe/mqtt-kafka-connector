@@ -8,11 +8,12 @@ import (
 	"context"
 
 	"github.com/bborbe/errors"
-	"github.com/getsentry/raven-go"
+	"github.com/getsentry/sentry-go"
 	"github.com/golang/glog"
 )
 
-// SkipErrors runs the given Func and returns always nil.
+// SkipErrors wraps the given function to suppress all errors and always return nil.
+// Errors are logged as warnings but do not propagate to the caller.
 func SkipErrors(fn Func) Func {
 	return func(ctx context.Context) error {
 		if err := fn(ctx); err != nil {
@@ -22,23 +23,37 @@ func SkipErrors(fn Func) Func {
 	}
 }
 
-//counterfeiter:generate -o mocks/has-capture-error-and-wait.go --fake-name HasCaptureErrorAndWait . HasCaptureErrorAndWait
+//counterfeiter:generate -o mocks/has-capture-exception.go --fake-name HasCaptureException . HasCaptureException
 
-// HasCaptureErrorAndWait is compatibel with sentry.Client
-type HasCaptureErrorAndWait interface {
-	CaptureErrorAndWait(err error, tags map[string]string, interfaces ...raven.Interface) string
+// HasCaptureException defines the interface for error reporting services.
+// It is compatible with sentry.Client for reporting captured errors.
+type HasCaptureException interface {
+	CaptureException(
+		exception error,
+		hint *sentry.EventHint,
+		scope sentry.EventModifier,
+	) *sentry.EventID
 }
 
-// SkipErrorsAndReport runs the given Func, report errors to sentry and returns always nil.
+// SkipErrorsAndReport wraps the given function to suppress all errors, report them to an error tracking service, and always return nil.
+// Context cancellation errors are not reported. The function logs errors as warnings and sends them to the specified error tracker.
 func SkipErrorsAndReport(
 	fn Func,
-	hasCaptureErrorAndWait HasCaptureErrorAndWait,
+	hasCaptureException HasCaptureException,
 	tags map[string]string,
 ) Func {
 	return func(ctx context.Context) error {
-		if err := fn(ctx); err != nil && errors.Is(err, context.Canceled) == false {
+		if err := fn(ctx); err != nil && !errors.Is(err, context.Canceled) {
 			glog.Warningf("run failed: %v", err)
-			hasCaptureErrorAndWait.CaptureErrorAndWait(err, tags)
+			hasCaptureException.CaptureException(
+				errors.Wrapf(ctx, err, "run failed"),
+				&sentry.EventHint{
+					Context:           ctx,
+					Data:              tags,
+					OriginalException: err,
+				},
+				sentry.NewScope(),
+			)
 		}
 		return nil
 	}

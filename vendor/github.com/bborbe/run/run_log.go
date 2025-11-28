@@ -10,7 +10,8 @@ import (
 	"github.com/golang/glog"
 )
 
-// LogErrors for the given func
+// LogErrors wraps the given function to log any errors that occur while still propagating them.
+// Errors are logged as warnings and then returned to the caller.
 func LogErrors(fn Func) Func {
 	return func(ctx context.Context) error {
 		if err := fn(ctx); err != nil {

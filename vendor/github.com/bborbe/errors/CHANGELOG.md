@@ -8,6 +8,15 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.3.1
+
+- Add GitHub Actions workflows for CI, code review, and Claude integration
+- Add comprehensive test files for error handling patterns
+- Add golangci-lint configuration
+- Update dependencies
+- Remove vendor directory
+- Improve Makefile
+
 ## v1.3.0
 
 - refactor

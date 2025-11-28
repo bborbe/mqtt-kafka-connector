@@ -59,7 +59,7 @@ func (d *dataError) Format(s fmt.State, verb rune) {
 		}
 		fallthrough
 	case 's', 'q':
-		io.WriteString(s, d.Error())
+		_, _ = io.WriteString(s, d.Error())
 	}
 }
 

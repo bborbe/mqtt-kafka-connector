@@ -10,7 +10,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
-// NewMetrics create prometheus metrics for the given Func.
+// NewMetrics wraps a function with Prometheus metrics collection.
+// It tracks started, completed, failed runs and the timestamp of the last successful execution.
+// The metrics are registered with the provided registerer using the specified namespace and subsystem.
 func NewMetrics(
 	registerer prometheus.Registerer,
 	namespace string,

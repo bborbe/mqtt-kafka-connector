@@ -8,12 +8,14 @@ import (
 	"github.com/bborbe/errors"
 )
 
-// NewErrorList create a ErrorList with the given errors.
+// NewErrorList creates an aggregate error from the given errors.
+// It returns nil if no errors are provided or all errors are nil.
 func NewErrorList(errs ...error) error {
 	return errors.Join(errs...)
 }
 
-// NewErrorListByChan create a ErrorList with the given error channel.
+// NewErrorListByChan creates an aggregate error from all errors received from the given channel.
+// It blocks until the channel is closed and returns nil if no errors were received.
 func NewErrorListByChan(ch <-chan error) error {
 	var errs []error
 	for err := range ch {

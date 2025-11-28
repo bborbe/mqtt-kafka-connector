@@ -8,6 +8,13 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.1.9
+- Update dependencies to latest versions
+- Update bborbe/run and bborbe/errors libraries
+- Update Kafka client (IBM/sarama)
+- Update Ginkgo and Gomega testing frameworks
+- Remove deprecated dependencies (raven-go, automaxprocs, certifi)
+
 ## v1.1.8
 
 - go mod update

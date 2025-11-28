@@ -11,12 +11,14 @@ import (
 	"github.com/golang/glog"
 )
 
-// ParallelSkipper prevent execution of the given function at the same time.
+// ParallelSkipper prevents parallel execution of wrapped functions.
+// It ensures that only one instance of a wrapped function can run at a time, skipping subsequent calls.
 type ParallelSkipper interface {
 	SkipParallel(action Func) Func
 }
 
-// NewParallelSkipper return a new instance of ParallelSkipper.
+// NewParallelSkipper creates a new ParallelSkipper that can wrap functions to prevent parallel execution.
+// Each ParallelSkipper instance maintains its own execution state.
 func NewParallelSkipper() ParallelSkipper {
 	return &parallelSkipper{}
 }

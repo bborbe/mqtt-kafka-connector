@@ -9,7 +9,8 @@ import (
 	"fmt"
 )
 
-// CatchPanic catchs all panics for the given func
+// CatchPanic wraps the given function to recover from panics and convert them to errors.
+// If the wrapped function panics, the panic is recovered and returned as an error.
 func CatchPanic(fn Func) Func {
 	return func(ctx context.Context) (err error) {
 		defer func() {

@@ -14,14 +14,16 @@ import (
 	"github.com/golang/glog"
 )
 
-// ConcurrentRunner allow run N tasks concurrent
+// ConcurrentRunner manages concurrent execution of functions with a configurable concurrency limit.
+// It allows adding functions dynamically and executes them with controlled parallelism.
 type ConcurrentRunner interface {
 	Add(ctx context.Context, fn Func)
 	Run(ctx context.Context) error
 	io.Closer
 }
 
-// NewConcurrentRunner returns ConcurrentRunner with the given concurrent limit
+// NewConcurrentRunner creates a new ConcurrentRunner that limits concurrent execution to maxConcurrent functions.
+// The runner must be closed when no longer needed to clean up resources.
 func NewConcurrentRunner(maxConcurrent int) ConcurrentRunner {
 	return &concurrentRunner{
 		maxConcurrent: maxConcurrent,

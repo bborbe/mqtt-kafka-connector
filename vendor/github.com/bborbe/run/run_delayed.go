@@ -9,7 +9,8 @@ import (
 	"time"
 )
 
-// Delayed wraps the given function that delays the execution.
+// Delayed wraps the given function to delay its execution by the specified duration.
+// The delay is implemented using a timer and respects context cancellation.
 func Delayed(fn Func, duration time.Duration) Func {
 	return func(ctx context.Context) error {
 		select {

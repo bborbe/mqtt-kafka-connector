@@ -6,25 +6,27 @@ package run
 
 import "sync"
 
-// Fire a trigger
+// Fire represents the ability to trigger an event.
 type Fire interface {
-	// Fire trigger als Dons ch to get a element
+	// Fire signals the trigger, notifying any listeners waiting on the Done channel.
 	Fire()
 }
 
-// Done check for a trigger
+// Done represents the ability to wait for a trigger event.
 type Done interface {
-	// Done chan gets a element if trigger was fired
+	// Done returns a channel that receives a signal when the trigger is fired.
 	Done() <-chan struct{}
 }
 
-// Trigger combines fire and done
+// Trigger combines the ability to fire events and wait for them.
+// It provides a simple synchronization mechanism for coordinating between goroutines.
 type Trigger interface {
 	Fire
 	Done
 }
 
-// NewTrigger create a new Trigger
+// NewTrigger creates a new Trigger that can be used to coordinate between goroutines.
+// The trigger starts in an unfired state and can be fired multiple times safely.
 func NewTrigger() Trigger {
 	return &trigger{}
 }

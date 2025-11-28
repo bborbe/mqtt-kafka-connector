@@ -10,7 +10,8 @@ import (
 	"sync"
 )
 
-// CancelOnFirstFinish executes all given functions. After the first function finishes, any remaining functions will be canceled.
+// CancelOnFirstFinish executes all given functions in parallel and cancels the remaining functions when the first one completes.
+// It returns the error from the first function that finishes, or nil if that function succeeds.
 func CancelOnFirstFinish(ctx context.Context, funcs ...Func) error {
 	if len(funcs) == 0 {
 		return nil
@@ -20,7 +21,8 @@ func CancelOnFirstFinish(ctx context.Context, funcs ...Func) error {
 	return <-Run(ctx, funcs...)
 }
 
-// CancelOnFirstFinishWait executes all given functions. After the first function finishes, any remaining functions will be canceled.
+// CancelOnFirstFinishWait executes all given functions in parallel and cancels the remaining functions when the first one completes.
+// Unlike CancelOnFirstFinish, it waits for all functions to complete or be canceled and returns an aggregate error of all failures.
 func CancelOnFirstFinishWait(ctx context.Context, funcs ...Func) error {
 	if len(funcs) == 0 {
 		return nil
@@ -38,7 +40,8 @@ func CancelOnFirstFinishWait(ctx context.Context, funcs ...Func) error {
 	return NewErrorList(errs...)
 }
 
-// CancelOnFirstError executes all given functions. When a function encounters an error all remaining functions will be canceled.
+// CancelOnFirstError executes all given functions in parallel and cancels the remaining functions when the first error occurs.
+// It returns the first error encountered, providing fail-fast behavior.
 func CancelOnFirstError(ctx context.Context, funcs ...Func) error {
 	if len(funcs) == 0 {
 		return nil
@@ -54,7 +57,8 @@ func CancelOnFirstError(ctx context.Context, funcs ...Func) error {
 	return nil
 }
 
-// CancelOnFirstErrorWait executes all given functions. When a function encounters an error all remaining functions will be canceled.
+// CancelOnFirstErrorWait executes all given functions in parallel and cancels the remaining functions when the first error occurs.
+// Unlike CancelOnFirstError, it waits for all functions to complete or be canceled and returns an aggregate error of all failures.
 func CancelOnFirstErrorWait(ctx context.Context, funcs ...Func) error {
 	if len(funcs) == 0 {
 		return nil
@@ -72,7 +76,8 @@ func CancelOnFirstErrorWait(ctx context.Context, funcs ...Func) error {
 	return NewErrorList(errs...)
 }
 
-// All executes all given functions. Errors are wrapped into one aggregate error.
+// All executes all given functions in parallel and waits for all to complete.
+// It returns an aggregate error containing all errors that occurred during execution, or nil if all functions succeed.
 func All(ctx context.Context, funcs ...Func) error {
 	if len(funcs) == 0 {
 		return nil
@@ -82,7 +87,8 @@ func All(ctx context.Context, funcs ...Func) error {
 	return NewErrorListByChan(onlyNotNil(Run(ctx, funcs...)))
 }
 
-// Sequential run every given function.
+// Sequential executes all given functions one after another in order.
+// It stops and returns the first error encountered, or nil if all functions succeed.
 func Sequential(ctx context.Context, funcs ...Func) (err error) {
 	if len(funcs) == 0 {
 		return nil
@@ -100,7 +106,8 @@ func Sequential(ctx context.Context, funcs ...Func) (err error) {
 	return
 }
 
-// Run all functions and send each result to the returned channel.
+// Run executes all given functions in parallel and returns a channel that receives the result of each function.
+// The channel is closed when all functions have completed. This provides the lowest-level access to execution results.
 func Run(ctx context.Context, funcs ...Func) <-chan error {
 	if len(funcs) == 0 {
 		return nil

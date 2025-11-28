@@ -8,7 +8,8 @@ import (
 	"context"
 )
 
-// Triggered calls the given fn if something arrives on chan
+// Triggered wraps the given function to execute only when triggered by a channel signal.
+// The function waits for either a trigger signal or context cancellation before proceeding.
 func Triggered(fn Func, trigger <-chan struct{}) Func {
 	return func(ctx context.Context) error {
 		select {
