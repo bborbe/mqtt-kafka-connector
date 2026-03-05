@@ -31,8 +31,10 @@ func main() {
 	}
 
 	glog.V(0).Infof("application started")
+	ctxWithSig, stop := signal.NotifyContext(ctx, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
 	if err := app.run(
-		contextWithSig(ctx),
+		ctxWithSig,
 	); err != nil {
 		glog.Exitf("application failed: %+v", err)
 	}
@@ -46,23 +48,6 @@ type application struct {
 	MqttPassword string `required:"false" arg:"mqtt-password" env:"MQTT_PASSWORD" usage:"mqtt password"                        display:"length"`
 	MqttTopic    string `required:"true"  arg:"mqtt-topic"    env:"MQTT_TOPIC"    usage:"topic name dummy data are written to"`
 	MqttPayload  string `required:"true"  arg:"mqtt-payload"  env:"MQTT_PAYLOAD"  usage:"content written to topic"`
-}
-
-func contextWithSig(ctx context.Context) context.Context {
-	ctxWithCancel, cancel := context.WithCancel(ctx)
-	go func() {
-		defer cancel()
-
-		signalCh := make(chan os.Signal, 1)
-		signal.Notify(signalCh, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-
-		select {
-		case <-signalCh:
-		case <-ctx.Done():
-		}
-	}()
-
-	return ctxWithCancel
 }
 
 func (a *application) run(ctx context.Context) error {

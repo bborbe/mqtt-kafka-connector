@@ -39,8 +39,10 @@ func main() {
 	}
 
 	glog.V(0).Infof("application started")
+	ctxWithSig, stop := signal.NotifyContext(ctx, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
 	if err := app.run(
-		contextWithSig(ctx),
+		ctxWithSig,
 	); err != nil {
 		glog.Exitf("application failed: %+v", err)
 	}
@@ -57,23 +59,6 @@ type application struct {
 	KafkaBrokers string        `required:"true"  arg:"kafka-brokers" env:"KAFKA_BROKERS" usage:"kafka brokers"`
 	KafkaTopic   string        `required:"true"  arg:"kafka-topic"   env:"KAFKA_TOPIC"   usage:"kafka topic"`
 	Port         int           `required:"false" arg:"port"          env:"PORT"          usage:"port to listen"                        default:"9022"`
-}
-
-func contextWithSig(ctx context.Context) context.Context {
-	ctxWithCancel, cancel := context.WithCancel(ctx)
-	go func() {
-		defer cancel()
-
-		signalCh := make(chan os.Signal, 1)
-		signal.Notify(signalCh, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-
-		select {
-		case <-signalCh:
-		case <-ctx.Done():
-		}
-	}()
-
-	return ctxWithCancel
 }
 
 func (a *application) run(

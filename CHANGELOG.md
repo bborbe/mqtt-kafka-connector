@@ -8,6 +8,12 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.2
+
+- Fix gosec G118: use signal.NotifyContext instead of manual context cancellation
+- Update docker/cli to v29.2.0 (GHSA-p436-gjf2-799p)
+- Update dependencies to latest versions
+
 ## v1.2.1
 
 - Add GitHub Actions CI workflow
