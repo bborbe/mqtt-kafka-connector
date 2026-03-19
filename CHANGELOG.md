@@ -8,6 +8,14 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.3
+
+- Update go to 1.26.1
+- Bump bborbe/argument, errors, run to latest patch versions
+- Update golang.org/x/oauth2, sync, sys, crypto dependencies
+- Upgrade grpc v1.79.3, otel v1.39.0, osv-scanner v2.3.4
+- Remove large exclude/replace blocks and cleanup go.mod
+
 ## v1.2.2
 
 - Fix gosec G118: use signal.NotifyContext instead of manual context cancellation
