@@ -8,6 +8,10 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.6
+
+- chore: Verify project health — all tests pass, linting succeeds, and precommit checks are clean
+
 ## v1.2.5
 
 - fix: Add local patch for containerd v1.7.30 to fix LinuxPids.Limit type incompatibility with opencontainers/runtime-spec v1.3.0
