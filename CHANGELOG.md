@@ -8,6 +8,11 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.5
+
+- fix: Add local patch for containerd v1.7.30 to fix LinuxPids.Limit type incompatibility with opencontainers/runtime-spec v1.3.0
+- chore: Update Makefile to exclude patches/ directory from format, addlicense, osv-scanner, and trivy scans
+
 ## v1.2.4
 
 - upgrade golangci-lint from v1 to v2

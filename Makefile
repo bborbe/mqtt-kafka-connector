@@ -13,10 +13,10 @@ ensure:
 
 .PHONY: format
 format:
-	find . -type f -name 'go.mod' -not -path './vendor/*' -exec go run -mod=mod github.com/shoenig/go-modtool -w fmt "{}" \;
-	find . -type f -name '*.go' -not -path './vendor/*' -exec gofmt -w "{}" +
+	find . -type f -name 'go.mod' -not -path './vendor/*' -not -path './patches/*' -exec go run -mod=mod github.com/shoenig/go-modtool -w fmt "{}" \;
+	find . -type f -name '*.go' -not -path './vendor/*' -not -path './patches/*' -exec gofmt -w "{}" +
 	go run -mod=mod github.com/incu6us/goimports-reviser/v3 -project-name github.com/bborbe/mqtt-kafka-connector -format -excludes vendor ./...
-	find . -type d -name vendor -prune -o -type f -name '*.go' -print0 | xargs -0 -n 10 go run -mod=mod github.com/segmentio/golines --max-len=100 -w
+	find . -type d \( -name vendor -o -name patches \) -prune -o -type f -name '*.go' -print0 | xargs -0 -n 10 go run -mod=mod github.com/segmentio/golines --max-len=100 -w
 
 .PHONY: generate
 generate:
@@ -53,10 +53,10 @@ vulncheck:
 osv-scanner:
 	@if [ -f .osv-scanner.toml ]; then \
 		echo "Using .osv-scanner.toml"; \
-		go run -mod=mod github.com/google/osv-scanner/v2/cmd/osv-scanner --config .osv-scanner.toml --recursive .; \
+		go run -mod=mod github.com/google/osv-scanner/v2/cmd/osv-scanner --config .osv-scanner.toml --experimental-exclude patches --recursive .; \
 	else \
 		echo "No config found, running default scan"; \
-		go run -mod=mod github.com/google/osv-scanner/v2/cmd/osv-scanner --recursive .; \
+		go run -mod=mod github.com/google/osv-scanner/v2/cmd/osv-scanner --experimental-exclude patches --recursive .; \
 	fi
 
 .PHONY: gosec
@@ -65,17 +65,26 @@ gosec:
 
 .PHONY: trivy
 trivy:
-	trivy fs --db-repository ghcr.io/aquasecurity/trivy-db --scanners vuln,secret --quiet --no-progress --disable-telemetry --exit-code 1 .
+	trivy fs \
+	--db-repository ghcr.io/aquasecurity/trivy-db \
+	--scanners vuln,secret \
+	--skip-dirs patches \
+	--quiet \
+	--no-progress \
+	--disable-telemetry \
+	--exit-code 1 .
 
 .PHONY: addlicense
 addlicense:
-	go run -mod=mod github.com/google/addlicense -c "Benjamin Borbe" -y $$(date +'%Y') -l bsd $$(find . -name "*.go" -not -path './vendor/*')
+	go run -mod=mod github.com/google/addlicense -c "Benjamin Borbe" -y $$(date +'%Y') -l bsd $$(find . -name "*.go" -not -path './vendor/*' -not -path './patches/*')
 
+.PHONY: run
 run:
 	docker network create kafka || echo 'network already exists'
 	docker-compose up -d
 	docker-compose logs -f
 
+.PHONY: ksqlcli
 ksqlcli:
 	docker run -ti \
 	--net=kafka \
