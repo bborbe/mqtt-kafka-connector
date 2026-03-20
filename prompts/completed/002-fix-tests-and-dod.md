@@ -1,7 +1,12 @@
 ---
-status: approved
+status: completed
+summary: Ran make precommit — all tests pass, linting succeeds, and no issues found; project is in a healthy state.
+container: mqtt-kafka-connector-002-fix-tests-and-dod
+dark-factory-version: v0.59.5-dirty
 created: "2026-03-20T14:24:31Z"
 queued: "2026-03-20T14:24:31Z"
+started: "2026-03-20T15:44:44Z"
+completed: "2026-03-20T15:47:48Z"
 ---
 
 <summary>
