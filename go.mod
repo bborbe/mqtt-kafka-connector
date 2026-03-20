@@ -2,10 +2,6 @@ module github.com/bborbe/mqtt-kafka-connector
 
 go 1.26.1
 
-replace (
-	github.com/containerd/containerd v1.7.30 => ./patches/containerd
-)
-
 require (
 	github.com/IBM/sarama v1.47.0
 	github.com/actgardner/gogen-avro/v9 v9.2.0
