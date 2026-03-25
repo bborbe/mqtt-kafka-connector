@@ -8,6 +8,12 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.8
+
+- Update dependencies to fix containerd v1.7.30 compile error in osv-scanner
+- Upgrade osv-scanner v2.3.5, golangci-lint v2.11.4, go-modtool v0.7.1
+- Upgrade bborbe libs (argument v2.12.12, errors v1.5.8, http v1.26.7, run v1.9.11)
+
 ## v1.2.7
 
 - remove vendored containerd patches directory and local replace directive
