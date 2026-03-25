@@ -8,6 +8,10 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.9
+
+- Pin runtime-spec to v1.2.1 to fix containerd v1.7.30 compile error in CI
+
 ## v1.2.8
 
 - Update dependencies to fix containerd v1.7.30 compile error in osv-scanner
