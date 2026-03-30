@@ -8,6 +8,13 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.10
+
+- Bump bborbe/http to v1.26.8 and bborbe/run to v1.9.12
+- Update multiple indirect dependencies (otel, prometheus, google APIs, moby)
+- Add opencontainers/runtime-spec replace directive
+- Enable --allow-parallel-runners for golangci-lint
+
 ## v1.2.9
 
 - Pin runtime-spec to v1.2.1 to fix containerd v1.7.30 compile error in CI
