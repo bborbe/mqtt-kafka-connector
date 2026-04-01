@@ -2,7 +2,10 @@ module github.com/bborbe/mqtt-kafka-connector
 
 go 1.26.1
 
-replace github.com/opencontainers/runtime-spec => github.com/opencontainers/runtime-spec v1.2.0
+replace (
+	github.com/denis-tingaikin/go-header => github.com/denis-tingaikin/go-header v0.5.0
+	github.com/opencontainers/runtime-spec => github.com/opencontainers/runtime-spec v1.2.0
+)
 
 require (
 	github.com/IBM/sarama v1.47.0

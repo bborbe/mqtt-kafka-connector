@@ -8,6 +8,10 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.13
+
+- Fix golangci-lint compilation by pinning go-header to v0.5.0
+
 ## v1.2.12
 
 - Update dependencies to fix security vulnerabilities (go-git/v5 v5.17.2, buildkit v0.29.0)
