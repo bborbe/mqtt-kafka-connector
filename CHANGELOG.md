@@ -8,6 +8,13 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.14
+
+- Bump Go 1.26.1 → 1.26.2
+- Update bborbe dependencies (argument, errors, http, run)
+- Update counterfeiter v6.12.1 → v6.12.2
+- Add OSV/Trivy ignores for known unfixable vulnerabilities
+
 ## v1.2.13
 
 - Fix golangci-lint compilation by pinning go-header to v0.5.0

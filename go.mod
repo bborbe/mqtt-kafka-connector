@@ -1,19 +1,23 @@
 module github.com/bborbe/mqtt-kafka-connector
 
-go 1.26.1
+go 1.26.2
 
 replace (
+	github.com/anthropics/anthropic-sdk-go => github.com/anthropics/anthropic-sdk-go v1.26.0
+	github.com/charmbracelet/x/cellbuf => github.com/charmbracelet/x/cellbuf v0.0.15
 	github.com/denis-tingaikin/go-header => github.com/denis-tingaikin/go-header v0.5.0
+	github.com/diskfs/go-diskfs => github.com/diskfs/go-diskfs v1.7.0
+	github.com/nunnatsa/ginkgolinter/types => github.com/nunnatsa/ginkgolinter v0.19.1
 	github.com/opencontainers/runtime-spec => github.com/opencontainers/runtime-spec v1.2.0
 )
 
 require (
 	github.com/IBM/sarama v1.47.0
 	github.com/actgardner/gogen-avro/v9 v9.2.0
-	github.com/bborbe/argument/v2 v2.12.14
-	github.com/bborbe/errors v1.5.8
-	github.com/bborbe/http v1.26.8
-	github.com/bborbe/run v1.9.14
+	github.com/bborbe/argument/v2 v2.12.17
+	github.com/bborbe/errors v1.5.9
+	github.com/bborbe/http v1.26.9
+	github.com/bborbe/run v1.9.16
 	github.com/eclipse/paho.mqtt.golang v1.5.1
 	github.com/golang/glog v1.2.5
 	github.com/golangci/golangci-lint/v2 v2.11.4
@@ -22,7 +26,7 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/incu6us/goimports-reviser/v3 v3.12.6
 	github.com/kisielk/errcheck v1.10.0
-	github.com/maxbrunsfeld/counterfeiter/v6 v6.12.1
+	github.com/maxbrunsfeld/counterfeiter/v6 v6.12.2
 	github.com/onsi/ginkgo/v2 v2.28.1
 	github.com/onsi/gomega v1.39.1
 	github.com/prometheus/client_golang v1.23.2
