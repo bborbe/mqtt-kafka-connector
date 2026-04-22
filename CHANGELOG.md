@@ -8,6 +8,13 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.15
+
+- Update bborbe/* dependencies (argument, errors, http, run, collection, log, math, parse, sentry, time, validation)
+- Update golang.org/x/* packages (crypto, mod, net, sys, telemetry, term, text, tools, vuln)
+- Update getsentry/sentry-go to v0.45.0 and go-git/go-git to v5.18.0
+- Add dark-factory env vars and cache mounts for Go build cache
+
 ## v1.2.14
 
 - Bump Go 1.26.1 → 1.26.2
