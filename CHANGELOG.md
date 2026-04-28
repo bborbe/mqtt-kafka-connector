@@ -8,6 +8,14 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.16
+
+- Update IBM/sarama to v1.48.0
+- Update bborbe/argument, run, collection, parse, time, validation
+- Update securego/gosec to v2.26.1
+- Update golang.org/x/vuln to v1.3.0
+- Update anthropic-sdk-go and other indirect deps
+
 ## v1.2.15
 
 - Update bborbe/* dependencies (argument, errors, http, run, collection, log, math, parse, sentry, time, validation)
