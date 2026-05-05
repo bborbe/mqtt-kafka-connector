@@ -8,6 +8,12 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.17
+
+- chore: Update indirect dependencies (otel v1.43.0, grpc v1.81.0, google APIs, modernc.org/sqlite v1.50.0, mvdan.cc/gofumpt v0.10.0, and others)
+- chore: github.com/docker/docker remains at v28.5.2+incompatible (v29.3.1 not yet published to Go module registry)
+- chore: github.com/go-git/go-git/v5 verified at v5.18.0 (CVE-2026-41506 fix confirmed)
+
 ## v1.2.16
 
 - Update IBM/sarama to v1.48.0
