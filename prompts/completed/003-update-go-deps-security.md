@@ -1,10 +1,11 @@
 ---
-status: committing
+status: completed
 container: mqtt-kafka-connector-003-update-go-deps-security
 dark-factory-version: v0.148.4-3-gc45254a
 created: "2026-05-05T17:38:43Z"
 queued: "2026-05-05T17:38:43Z"
 started: "2026-05-05T17:39:31Z"
+completed: "2026-05-05T17:49:54Z"
 ---
 
 <summary>
