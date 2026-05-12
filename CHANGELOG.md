@@ -8,6 +8,13 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.18
+
+- security: bump github.com/go-git/go-git/v5 to v5.19.0 (CVE-2026-45022)
+- security: bump Go to 1.26.3 (stdlib CVEs)
+- chore: remove stale unused ignore entries from .osv-scanner.toml (GO-2026-4923, GHSA-6jwv-w5xf-7j27, GO-2022-0470, GO-2026-4772, GO-2026-4771, GHSA-xmrv-pmrh-hhx2)
+- security: docker/docker advisories GHSA-pxq6-2prw-chj9, GHSA-x744-4wpc-v9h2 remain suppressed in .trivyignore/.osv-scanner.toml (no upstream fix; latest is v28.5.2, advisory wants >= v29.3.1)
+
 ## v1.2.17
 
 - chore: Update indirect dependencies (otel v1.43.0, grpc v1.81.0, google APIs, modernc.org/sqlite v1.50.0, mvdan.cc/gofumpt v0.10.0, and others)
