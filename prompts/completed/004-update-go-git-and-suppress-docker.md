@@ -1,13 +1,12 @@
 ---
-status: committing
+status: completed
 summary: Bumped go-git/v5 to v5.19.0 (CVE-2026-45022), updated Go to 1.26.3, removed 6 stale unused ignore entries from .osv-scanner.toml, and updated CHANGELOG.md with an Unreleased section.
 container: mqtt-kafka-connector-004-update-go-git-and-suppress-docker
 dark-factory-version: v0.156.1-1-g04f3863-dirty
 created: "2026-05-12T13:00:00Z"
 queued: "2026-05-12T17:14:40Z"
 started: "2026-05-12T19:42:00Z"
-completed: "2026-05-12T17:54:07Z"
-lastFailReason: 'execute prompt: docker run failed: wait command: signal: killed'
+completed: "2026-05-12T19:46:34Z"
 ---
 
 <summary>
