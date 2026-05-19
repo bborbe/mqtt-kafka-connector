@@ -1,11 +1,12 @@
 ---
-status: committing
+status: completed
 summary: Bumped github.com/go-git/go-git/v5 from v5.19.0 to v5.19.1 to patch CVE-2026-45570 and CVE-2026-45571; updated CHANGELOG.md with Unreleased section; make precommit exits 0.
 container: mqtt-kafka-connector-exec-006-update-go-git-5-19-1
 dark-factory-version: v0.162.0
 created: "2026-05-19T20:15:55Z"
 queued: "2026-05-19T20:15:55Z"
 started: "2026-05-19T20:16:04Z"
+completed: "2026-05-19T20:18:03Z"
 ---
 
 <summary>
