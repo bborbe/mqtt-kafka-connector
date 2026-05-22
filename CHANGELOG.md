@@ -8,6 +8,10 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## v1.2.21
+
+- security: bump github.com/containerd/containerd to v1.7.32 (CVE-2026-46680, GHSA-fqw6-gf59-qr4w)
+
 ## v1.2.20
 
 - security: bump github.com/go-git/go-git/v5 to v5.19.1 (CVE-2026-45570, CVE-2026-45571)
