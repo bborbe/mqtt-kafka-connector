@@ -1,11 +1,12 @@
 ---
-status: committing
+status: completed
 summary: Bumped github.com/containerd/containerd from v1.7.31 to v1.7.32 to patch CVE-2026-46680 (GHSA-fqw6-gf59-qr4w)
 container: mqtt-kafka-connector-exec-007-update-containerd-1-7-32
 dark-factory-version: v0.164.0
 created: "2026-05-22T18:00:00Z"
 queued: "2026-05-22T17:11:44Z"
 started: "2026-05-22T17:11:56Z"
+completed: "2026-05-22T17:16:21Z"
 ---
 
 <summary>
