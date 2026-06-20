@@ -1,6 +1,6 @@
 module github.com/bborbe/mqtt-kafka-connector
 
-go 1.26.3
+go 1.26.4
 
 replace (
 	github.com/charmbracelet/x/cellbuf => github.com/charmbracelet/x/cellbuf v0.0.15
