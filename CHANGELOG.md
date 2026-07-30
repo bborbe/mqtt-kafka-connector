@@ -8,6 +8,10 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## Unreleased
+
+- fix(deps): bump github.com/klauspost/compress to v1.18.7 (GO-2026-5841, OOB read in /s2) and google.golang.org/grpc to v1.82.1 (GHSA-hrxh-6v49-42gf, xDS RBAC + HTTP/2)
+
 ## v1.2.22
 
 - fix(deps): bump x/text v0.39.0 (CVE-2026-56852) + Go 1.26.5 (GO-2026-5856); suppress unreachable/unfixable transitive CVEs (containerd, x/crypto/openpgp)
