@@ -8,7 +8,7 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
-## Unreleased
+## v1.2.24
 
 - fix(deps): bump go-git/go-git/v5 to v5.19.2 (GHSA-hc8v-wwc9-vgxm, GHSA-qgq7-7hm3-q39j)
 
