@@ -23,3 +23,7 @@ go run main.go \
 -kafka-topic=mqtt \
 -v=2
 ```
+
+## License
+
+This project is licensed under the BSD-style license. See the [LICENSE](LICENSE) file for details.
