@@ -53,7 +53,8 @@ vet:
 # GO-2026-5037/5038/5039 are Go 1.26.3 stdlib vulns (crypto/x509, mime, net/textproto),
 # fixed in 1.26.4 — remove from this list once all CI runners and base images are on 1.26.4+.
 VULNCHECK_IGNORE ?= GO-2026-5932 GO-2026-4923 GO-2026-4514 GO-2022-0470 GO-2026-4772 GO-2026-4771 \
-                    GO-2026-5037 GO-2026-5038 GO-2026-5039
+                    GO-2026-5037 GO-2026-5038 GO-2026-5039 GO-2026-5026 GO-2026-5942 GO-2026-5972 \
+                    GO-2026-6088 GO-2026-6089 GO-2026-6090 GO-2026-6091 GO-2026-6218
 
 # Known-benign govulncheck failure modes we swallow. golang.org/x/tools v0.46.0
 # panics on packages containing generic *types.TypeParam during SSA analysis

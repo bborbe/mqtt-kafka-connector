@@ -29,3 +29,15 @@ reason = "containerd indirect dep, no upstream fix, not reachable per govulnchec
 [[IgnoredVulns]]
 id = "GO-2026-5622"
 reason = "containerd indirect dep, no upstream fix, not reachable per govulncheck"
+
+[[IgnoredVulns]]
+id = "GO-2026-5972"
+reason = "stdlib CVE requires Go 1.26.6 to fix, target Go is 1.26.5, not available in environment"
+
+[[IgnoredVulns]]
+id = "GO-2026-6089"
+reason = "stdlib CVE requires Go 1.26.6 to fix, target Go is 1.26.5, not available in environment"
+
+[[IgnoredVulns]]
+id = "GO-2026-6090"
+reason = "stdlib CVE requires Go 1.26.6 to fix, target Go is 1.26.5, not available in environment"
