@@ -14,8 +14,8 @@ require (
 	github.com/IBM/sarama v1.60.1
 	github.com/bborbe/argument/v2 v2.12.34
 	github.com/bborbe/errors v1.5.17
-	github.com/bborbe/http v1.26.20
-	github.com/bborbe/run v1.9.34
+	github.com/bborbe/http v1.26.21
+	github.com/bborbe/run v1.9.35
 	github.com/eclipse/paho.mqtt.golang v1.5.1
 	github.com/golang/glog v1.2.5
 	github.com/gorilla/mux v1.8.1
@@ -26,13 +26,13 @@ require (
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
-	github.com/bborbe/collection v1.20.20 // indirect
-	github.com/bborbe/kv v1.21.9 // indirect
+	github.com/bborbe/collection v1.20.21 // indirect
+	github.com/bborbe/kv v1.21.10 // indirect
 	github.com/bborbe/log v1.6.22 // indirect
-	github.com/bborbe/math v1.3.18 // indirect
-	github.com/bborbe/parse v1.10.19 // indirect
+	github.com/bborbe/math v1.3.19 // indirect
+	github.com/bborbe/parse v1.10.20 // indirect
 	github.com/bborbe/sentry v1.9.24 // indirect
-	github.com/bborbe/time v1.27.8 // indirect
+	github.com/bborbe/time v1.27.9 // indirect
 	github.com/bborbe/validation v1.4.19 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect

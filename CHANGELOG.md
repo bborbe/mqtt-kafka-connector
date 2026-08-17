@@ -8,6 +8,10 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## Unreleased
+
+- chore: update bborbe module dependencies — `http` v1.26.20 -> v1.26.21, `run` v1.9.34 -> v1.9.35, plus transitive `collection` v1.20.21, `kv` v1.21.10, `math` v1.3.19, `parse` v1.10.20, `time` v1.27.9
+
 ## v1.2.27
 
 - chore: update Go to 1.26.6 and update dependencies
