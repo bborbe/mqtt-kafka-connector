@@ -1,6 +1,6 @@
 module github.com/bborbe/mqtt-kafka-connector
 
-go 1.26.5
+go 1.26.6
 
 replace (
 	github.com/charmbracelet/x/cellbuf => github.com/charmbracelet/x/cellbuf v0.0.15
@@ -28,12 +28,12 @@ require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
 	github.com/bborbe/collection v1.20.20 // indirect
 	github.com/bborbe/kv v1.21.9 // indirect
-	github.com/bborbe/log v1.6.21 // indirect
+	github.com/bborbe/log v1.6.22 // indirect
 	github.com/bborbe/math v1.3.18 // indirect
 	github.com/bborbe/parse v1.10.19 // indirect
 	github.com/bborbe/sentry v1.9.24 // indirect
 	github.com/bborbe/time v1.27.8 // indirect
-	github.com/bborbe/validation v1.4.18 // indirect
+	github.com/bborbe/validation v1.4.19 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
