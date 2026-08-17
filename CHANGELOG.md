@@ -8,6 +8,10 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## Unreleased
+
+- update Go to 1.26.6 and update dependencies (GO-2026-6179, CVE-2026-56864)
+
 ## v1.2.25
 
 - chore: delete tools.go and remove tool-only dependencies from go.mod (473 -> 74 lines)
