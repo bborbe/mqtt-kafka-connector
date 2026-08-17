@@ -10,7 +10,15 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
-- update Go to 1.26.6 and update dependencies (GO-2026-6179, CVE-2026-56864)
+- chore: update bborbe module dependencies — `http` v1.26.20 -> v1.26.21, `run` v1.9.34 -> v1.9.35, plus transitive `collection` v1.20.21, `kv` v1.21.10, `math` v1.3.19, `parse` v1.10.20, `time` v1.27.9
+
+## v1.2.27
+
+- chore: update Go to 1.26.6 and update dependencies
+
+## v1.2.26
+
+- fix(deps): update golang.org/x/mod to v0.40.0 (GO-2026-6179, GO-2026-6180), update all dependencies
 
 ## v1.2.25
 
