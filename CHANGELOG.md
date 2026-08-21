@@ -8,7 +8,7 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
-## Unreleased
+## v1.2.29
 
 - chore: Run gofmt -w last in the `format` target so golines wrapping is normalized before the gofmt lint check
 - chore: Pin golangci-lint v2.13.1 and errcheck v1.20.0 for Go 1.27 toolchain compatibility
