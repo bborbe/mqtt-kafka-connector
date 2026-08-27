@@ -8,6 +8,10 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## Unreleased
+
+- feat: opt into `autoMerge.trivial` for mechanically-trivial update PRs
+
 ## v1.2.29
 
 - chore: Run gofmt -w last in the `format` target so golines wrapping is normalized before the gofmt lint check
