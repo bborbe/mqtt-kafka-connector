@@ -8,9 +8,11 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
-## Unreleased
+## v1.2.30
 
 - feat: opt into `autoMerge.trivial` for mechanically-trivial update PRs
+- chore: add do-not-merge label gate workflow
+- chore: update go to 1.27.0 and bump dependencies (sarama, argument, errors, http, run, gomega, sentry, etc.)
 
 ## v1.2.29
 
