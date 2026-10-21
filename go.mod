@@ -1,6 +1,6 @@
 module github.com/bborbe/mqtt-kafka-connector
 
-go 1.27.2
+go 1.27.3
 
 replace (
 	github.com/opencontainers/runtime-spec => github.com/opencontainers/runtime-spec v1.2.0
@@ -22,14 +22,14 @@ require (
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
-	github.com/bborbe/collection v1.21.2 // indirect
-	github.com/bborbe/kv v1.21.18 // indirect
-	github.com/bborbe/log v1.7.4 // indirect
-	github.com/bborbe/math v1.4.14 // indirect
-	github.com/bborbe/parse v1.12.3 // indirect
-	github.com/bborbe/sentry v1.10.4 // indirect
-	github.com/bborbe/time v1.27.16 // indirect
-	github.com/bborbe/validation v1.5.4 // indirect
+	github.com/bborbe/collection v1.21.3 // indirect
+	github.com/bborbe/kv v1.21.19 // indirect
+	github.com/bborbe/log v1.7.5 // indirect
+	github.com/bborbe/math v1.4.15 // indirect
+	github.com/bborbe/parse v1.12.4 // indirect
+	github.com/bborbe/sentry v1.10.5 // indirect
+	github.com/bborbe/time v1.27.18 // indirect
+	github.com/bborbe/validation v1.5.5 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
@@ -40,7 +40,7 @@ require (
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/pprof v0.0.0-20261014150452-c3b4e57cab2c // indirect
+	github.com/google/pprof v0.0.0-20261016150608-1facf8f91b50 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/hashicorp/go-uuid v1.0.4 // indirect
 	github.com/jcmturner/aescts/v2 v2.0.0 // indirect
