@@ -8,10 +8,10 @@ replace (
 
 require (
 	github.com/IBM/sarama v1.61.1
-	github.com/bborbe/argument/v2 v2.13.6
-	github.com/bborbe/errors v1.6.3
-	github.com/bborbe/http v1.26.30
-	github.com/bborbe/run v1.11.2
+	github.com/bborbe/argument/v2 v2.13.8
+	github.com/bborbe/errors v1.6.5
+	github.com/bborbe/http v1.26.31
+	github.com/bborbe/run v1.11.5
 	github.com/eclipse/paho.mqtt.golang v1.5.1
 	github.com/golang/glog v1.2.5
 	github.com/gorilla/mux v1.8.1
@@ -22,14 +22,14 @@ require (
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
-	github.com/bborbe/collection v1.21.3 // indirect
+	github.com/bborbe/collection v1.21.4 // indirect
 	github.com/bborbe/kv v1.21.19 // indirect
 	github.com/bborbe/log v1.7.5 // indirect
-	github.com/bborbe/math v1.4.15 // indirect
+	github.com/bborbe/math v1.4.16 // indirect
 	github.com/bborbe/parse v1.12.4 // indirect
-	github.com/bborbe/sentry v1.10.5 // indirect
+	github.com/bborbe/sentry v1.10.6 // indirect
 	github.com/bborbe/time v1.27.18 // indirect
-	github.com/bborbe/validation v1.5.5 // indirect
+	github.com/bborbe/validation v1.5.6 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
@@ -40,7 +40,7 @@ require (
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/pprof v0.0.0-20261016150608-1facf8f91b50 // indirect
+	github.com/google/pprof v0.0.0-20261026192309-dbd0ed30aa88 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/hashicorp/go-uuid v1.0.4 // indirect
 	github.com/jcmturner/aescts/v2 v2.0.0 // indirect
@@ -54,12 +54,12 @@ require (
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_model v0.6.3 // indirect
 	github.com/prometheus/common v0.72.1 // indirect
-	github.com/prometheus/procfs v0.22.0 // indirect
+	github.com/prometheus/procfs v0.23.0 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20250401214520-65e299d6c5c9 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
 	golang.org/x/crypto v0.58.0 // indirect
 	golang.org/x/mod v0.42.0 // indirect
-	golang.org/x/net v0.61.0 // indirect
+	golang.org/x/net v0.62.0 // indirect
 	golang.org/x/sync v0.24.0 // indirect
 	golang.org/x/sys v0.49.0 // indirect
 	golang.org/x/text v0.43.0 // indirect
