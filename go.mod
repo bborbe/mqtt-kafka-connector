@@ -23,12 +23,12 @@ require (
 require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
 	github.com/bborbe/collection v1.21.4 // indirect
-	github.com/bborbe/kv v1.21.21 // indirect
+	github.com/bborbe/kv v1.21.23 // indirect
 	github.com/bborbe/log v1.7.5 // indirect
 	github.com/bborbe/math v1.4.16 // indirect
 	github.com/bborbe/parse v1.12.4 // indirect
 	github.com/bborbe/sentry v1.10.6 // indirect
-	github.com/bborbe/time v1.27.20 // indirect
+	github.com/bborbe/time v1.27.21 // indirect
 	github.com/bborbe/validation v1.5.6 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
