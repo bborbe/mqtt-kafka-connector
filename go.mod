@@ -11,7 +11,7 @@ require (
 	github.com/bborbe/argument/v2 v2.13.8
 	github.com/bborbe/errors v1.6.5
 	github.com/bborbe/http v1.26.32
-	github.com/bborbe/run v1.11.7
+	github.com/bborbe/run v1.11.8
 	github.com/eclipse/paho.mqtt.golang v1.5.1
 	github.com/golang/glog v1.2.5
 	github.com/gorilla/mux v1.8.1
