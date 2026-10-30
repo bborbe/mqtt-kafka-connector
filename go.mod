@@ -11,7 +11,7 @@ require (
 	github.com/bborbe/argument/v2 v2.13.8
 	github.com/bborbe/errors v1.6.5
 	github.com/bborbe/http v1.26.32
-	github.com/bborbe/run v1.11.8
+	github.com/bborbe/run v1.11.9
 	github.com/eclipse/paho.mqtt.golang v1.5.1
 	github.com/golang/glog v1.2.5
 	github.com/gorilla/mux v1.8.1
@@ -23,12 +23,12 @@ require (
 require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
 	github.com/bborbe/collection v1.21.4 // indirect
-	github.com/bborbe/kv v1.21.26 // indirect
+	github.com/bborbe/kv v1.21.27 // indirect
 	github.com/bborbe/log v1.7.5 // indirect
 	github.com/bborbe/math v1.4.16 // indirect
 	github.com/bborbe/parse v1.12.4 // indirect
 	github.com/bborbe/sentry v1.10.6 // indirect
-	github.com/bborbe/time v1.27.22 // indirect
+	github.com/bborbe/time v1.27.24 // indirect
 	github.com/bborbe/validation v1.5.6 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -54,7 +54,7 @@ require (
 	github.com/pierrec/lz4/v4 v4.1.33 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_model v0.6.3 // indirect
-	github.com/prometheus/common v0.73.0 // indirect
+	github.com/prometheus/common v0.73.1 // indirect
 	github.com/prometheus/procfs v0.23.0 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20250401214520-65e299d6c5c9 // indirect
 	go.yaml.in/yaml/v3 v3.0.5 // indirect
