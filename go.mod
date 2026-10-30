@@ -28,7 +28,7 @@ require (
 	github.com/bborbe/math v1.4.16 // indirect
 	github.com/bborbe/parse v1.12.4 // indirect
 	github.com/bborbe/sentry v1.10.6 // indirect
-	github.com/bborbe/time v1.27.21 // indirect
+	github.com/bborbe/time v1.27.22 // indirect
 	github.com/bborbe/validation v1.5.6 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
