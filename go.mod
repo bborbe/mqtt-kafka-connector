@@ -1,6 +1,6 @@
 module github.com/bborbe/mqtt-kafka-connector
 
-go 1.27.3
+go 1.27.4
 
 replace (
 	github.com/opencontainers/runtime-spec => github.com/opencontainers/runtime-spec v1.2.0
@@ -8,10 +8,10 @@ replace (
 
 require (
 	github.com/IBM/sarama v1.61.1
-	github.com/bborbe/argument/v2 v2.13.9
-	github.com/bborbe/errors v1.6.6
-	github.com/bborbe/http v1.26.33
-	github.com/bborbe/run v1.11.10
+	github.com/bborbe/argument/v2 v2.13.11
+	github.com/bborbe/errors v1.6.7
+	github.com/bborbe/http v1.26.34
+	github.com/bborbe/run v1.11.12
 	github.com/eclipse/paho.mqtt.golang v1.5.1
 	github.com/golang/glog v1.2.5
 	github.com/gorilla/mux v1.8.1
@@ -22,14 +22,14 @@ require (
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
-	github.com/bborbe/collection v1.21.6 // indirect
-	github.com/bborbe/kv v1.21.28 // indirect
-	github.com/bborbe/log v1.7.8 // indirect
-	github.com/bborbe/math v1.4.18 // indirect
-	github.com/bborbe/parse v1.12.5 // indirect
-	github.com/bborbe/sentry v1.10.7 // indirect
-	github.com/bborbe/time v1.27.26 // indirect
-	github.com/bborbe/validation v1.5.9 // indirect
+	github.com/bborbe/collection v1.21.7 // indirect
+	github.com/bborbe/kv v1.21.30 // indirect
+	github.com/bborbe/log v1.7.9 // indirect
+	github.com/bborbe/math v1.4.20 // indirect
+	github.com/bborbe/parse v1.12.7 // indirect
+	github.com/bborbe/sentry v1.10.8 // indirect
+	github.com/bborbe/time v1.27.28 // indirect
+	github.com/bborbe/validation v1.5.10 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
@@ -40,7 +40,7 @@ require (
 	github.com/go-logr/logr v1.4.4 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
 	github.com/google/go-cmp v0.7.0 // indirect
-	github.com/google/pprof v0.0.0-20261110164715-8bb1ee682bd8 // indirect
+	github.com/google/pprof v0.0.0-20261111200114-fac431ef4d26 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/hashicorp/go-uuid v1.0.4 // indirect
 	github.com/jcmturner/aescts/v2 v2.0.0 // indirect
@@ -54,11 +54,11 @@ require (
 	github.com/pierrec/lz4/v4 v4.1.33 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_model v0.6.3 // indirect
-	github.com/prometheus/common v0.73.1 // indirect
+	github.com/prometheus/common v0.74.0 // indirect
 	github.com/prometheus/procfs v0.23.0 // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20250401214520-65e299d6c5c9 // indirect
 	go.yaml.in/yaml/v3 v3.0.6 // indirect
-	golang.org/x/crypto v0.58.0 // indirect
+	golang.org/x/crypto v0.59.0 // indirect
 	golang.org/x/mod v0.43.0 // indirect
 	golang.org/x/net v0.62.0 // indirect
 	golang.org/x/sync v0.25.0 // indirect
