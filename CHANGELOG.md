@@ -8,6 +8,10 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 * MINOR version when you add functionality in a backwards-compatible manner, and
 * PATCH version when you make backwards-compatible bug fixes.
 
+## Unreleased
+
+- fix: bump github.com/gorilla/websocket to v1.5.4-0.20240701034025-d67f41855da4 to clear GO-2026-6278 (weak PRNG for the WebSocket mask key)
+
 ## v1.3.0
 
 - feat: add a `check-task-link` gate that fails a PR whose body carries no `Task: <task_identifier>` line, and install a pinned, checksum-verified Trivy release so `test` stops failing on the retired keyring helper
