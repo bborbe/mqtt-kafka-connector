@@ -11,6 +11,7 @@ Please choose versions by [Semantic Versioning](http://semver.org/).
 ## Unreleased
 
 - chore: remove stale vulnerability ignore IDs that no longer apply (govulncheck, trivy)
+- fix: bump github.com/gorilla/websocket to v1.5.4-0.20240701034025-d67f41855da4 to clear GO-2026-6278 (weak PRNG for the WebSocket mask key)
 
 ## v1.3.0
 
